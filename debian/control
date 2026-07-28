@@ -1,0 +1,68 @@
+Source: minios-artwork
+Section: x11
+Priority: optional
+Maintainer: crims0n <crims0n@minios.dev>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Vcs-Git: https://github.com/minios-linux/minios-artwork.git
+Vcs-Browser: https://github.com/minios-linux/minios-artwork
+
+Package: minios6-artwork
+Architecture: all
+Depends: ${misc:Depends}, elementary-minios-icon-theme
+Provides: minios-artwork
+Conflicts: minios-artwork
+Replaces: minios-artwork
+Description: MiniOS 6 themes and artwork
+ This package contains the MiniOS 6 themes and artwork.
+
+Package: minios6-wallpapers
+Architecture: all
+Depends: ${misc:Depends}
+Provides: minios-wallpapers
+Conflicts: minios-wallpapers
+Replaces: minios-wallpapers
+Description: MiniOS 6 shared desktop wallpapers
+ This package contains the shared MiniOS 6 desktop wallpaper collection.
+
+Package: minios6-wallpapers-minimum
+Architecture: all
+Depends: ${misc:Depends}, minios6-artwork (= ${binary:Version})
+Provides: minios-wallpapers
+Conflicts: minios-wallpapers
+Replaces: minios-wallpapers
+Description: MiniOS 6 desktop wallpapers for the Minimum edition
+ This package contains the MiniOS 6 wallpapers selected for the
+ Minimum edition.
+
+Package: minios6-wallpapers-flux
+Architecture: all
+Depends: ${misc:Depends}, minios6-artwork (= ${binary:Version})
+Provides: minios-wallpapers
+Conflicts: minios-wallpapers
+Replaces: minios-wallpapers
+Description: MiniOS 6 desktop wallpapers for the Flux edition
+ This package contains the MiniOS 6 wallpapers selected for the
+ Flux edition.
+
+Package: minios6-wallpapers-standard
+Architecture: all
+Depends: ${misc:Depends}, minios6-artwork (= ${binary:Version}), minios6-wallpapers (= ${binary:Version})
+Description: MiniOS 6 desktop wallpapers for the Standard edition
+ This package contains the MiniOS 6 wallpapers selected for the
+ Standard edition.
+
+Package: minios6-wallpapers-toolbox
+Architecture: all
+Depends: ${misc:Depends}, minios6-artwork (= ${binary:Version}), minios6-wallpapers (= ${binary:Version})
+Description: MiniOS 6 desktop wallpapers for the Toolbox edition
+ This package contains the MiniOS 6 wallpapers selected for the
+ Toolbox edition.
+
+Package: minios6-wallpapers-ultra
+Architecture: all
+Depends: ${misc:Depends}, minios6-artwork (= ${binary:Version}), minios6-wallpapers (= ${binary:Version})
+Description: MiniOS 6 desktop wallpapers for the Ultra edition
+ This package contains the MiniOS 6 wallpapers selected for the
+ Ultra edition.

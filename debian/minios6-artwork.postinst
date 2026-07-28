@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+configure)
+    for size in 16 24 48 64 128; do
+        update-alternatives --install \
+            "/usr/share/icons/elementary-minios/places/$size/distributor-logo.svg" \
+            "elementary-minios-branding-$size" \
+            "/usr/share/icons/elementary-minios/places/$size/distributor-logo-minios.svg" 10
+    done
+    ;;
+abort-upgrade | abort-deconfigure | abort-remove)
+    ;;
+*)
+    echo "$0 called with unknown argument '$1'" >&2
+    exit 1
+    ;;
+esac
+
+#DEBHELPER#
+exit 0

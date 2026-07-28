@@ -1,0 +1,80 @@
+#!/bin/bash
+
+set -euo pipefail
+
+WALLPAPER=${1:?wallpaper path is required}
+TARGET_ROOT=${MINIOS_ARTWORK_ROOT:-}
+XML_FILE="$TARGET_ROOT/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml"
+OS_RELEASE="$TARGET_ROOT/etc/os-release"
+DISTRIBUTION=""
+
+[ -f "$TARGET_ROOT$WALLPAPER" ] || exit 0
+[ -f "$XML_FILE" ] || exit 0
+
+if [ -r "$OS_RELEASE" ]; then
+    DISTRIBUTION=$(sed -n 's/^VERSION_CODENAME=//p' "$OS_RELEASE" | tr -d '"' | tail -n 1)
+fi
+
+write_modern_xml() {
+    local MONITOR WORKSPACE
+    local -a MONITORS=(
+        Virtual-1 Virtual-2 Virtual1
+        eDP eDP-1
+        HDMI-A-0 HDMI-A-1 HDMI-1 HDMI-2
+        DP-1 DP-2 DP-3
+        LVDS-1 DVI-I-1 DVI-I-2
+    )
+
+    {
+        cat <<'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfce4-desktop" version="1.0">
+  <property name="desktop-icons" type="empty">
+    <property name="style" type="int" value="2"/>
+    <property name="file-icons" type="empty">
+      <property name="show-home" type="bool" value="true"/>
+      <property name="show-filesystem" type="bool" value="false"/>
+      <property name="show-removable" type="bool" value="false"/>
+      <property name="show-trash" type="bool" value="true"/>
+    </property>
+    <property name="icon-size" type="uint" value="48"/>
+    <property name="tooltip-size" type="double" value="64.000000"/>
+  </property>
+  <property name="backdrop" type="empty">
+    <property name="screen0" type="empty">
+EOF
+        for MONITOR in "${MONITORS[@]}"; do
+            printf '      <property name="monitor%s" type="empty">\n' "$MONITOR"
+            for WORKSPACE in 0 1 2 3; do
+                cat <<EOF
+        <property name="workspace${WORKSPACE}" type="empty">
+          <property name="last-image" type="string" value="${WALLPAPER}"/>
+          <property name="image-style" type="int" value="5"/>
+        </property>
+EOF
+            done
+            echo '      </property>'
+        done
+        cat <<'EOF'
+    </property>
+  </property>
+  <property name="last-settings-migration-version" type="uint" value="1"/>
+  <property name="desktop-menu" type="empty">
+    <property name="show" type="bool" value="false"/>
+  </property>
+</channel>
+EOF
+    } >"$XML_FILE"
+}
+
+case "$DISTRIBUTION" in
+resolute | trixie | excalibur | forky | sid)
+    write_modern_xml
+    ;;
+*)
+    sed -i -E \
+        "s#(name=\"image-path\" type=\"string\" value=\")[^\"]*#\1${WALLPAPER}#g" \
+        "$XML_FILE"
+    ;;
+esac

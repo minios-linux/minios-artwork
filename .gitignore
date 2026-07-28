@@ -1,0 +1,27 @@
+# Debian build state
+/.pc/
+/obj-*/
+/debian/.debhelper/
+/debian/debhelper-build-stamp
+/debian/files
+/debian/tmp/
+/debian/*.debhelper.log
+/debian/*.substvars
+/debian/minios[2-6]-artwork/
+/debian/minios[2-6]-wallpapers/
+/debian/minios6-wallpapers-*/
+
+# Package artifacts
+/*.build
+/*.buildinfo
+/*.changes
+/*.deb
+/*.dsc
+/*.tar.*
+
+# Editor and filesystem files
+*~
+*.swp
+.DS_Store
+/.idea/
+/.vscode/

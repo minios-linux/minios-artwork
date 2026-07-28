@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+configure)
+    /usr/lib/minios-artwork/configure-xfce-wallpaper \
+        /usr/share/backgrounds/minios6-ultra.jpg
+    ;;
+abort-upgrade | abort-deconfigure | abort-remove)
+    ;;
+*)
+    echo "$0 called with unknown argument '$1'" >&2
+    exit 1
+    ;;
+esac
+
+#DEBHELPER#
+exit 0
