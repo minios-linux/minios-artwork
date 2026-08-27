@@ -5,7 +5,8 @@
 /debian/debhelper-build-stamp
 /debian/files
 /debian/tmp/
-/debian/*.debhelper.log
+/debian/*.debhelper
+/debian/*.log
 /debian/*.substvars
 /debian/minios[2-6]-artwork/
 /debian/minios[2-6]-wallpapers/
